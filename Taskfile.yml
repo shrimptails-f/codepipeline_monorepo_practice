@@ -1,0 +1,96 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  default:
+    desc: 利用可能なタスクを表示する
+    cmds:
+      - task --list
+
+  setup:
+    desc: Dev Containerの初期設定を行う
+    cmds:
+      - cp "{{.ROOT_DIR}}/.gitconfig" ~/.gitconfig
+      - git config --global core.autocrlf input
+      - git config --global --add safe.directory "{{.ROOT_DIR}}"
+      - echo "Local environment is ready. Run 'task check' to verify it."
+
+  check:
+    desc: Go・AWS CLI・CDK・開発ツールを確認する
+    cmds:
+      - go version
+      - aws --version
+      - cdk --version
+      - task --version
+      - codex --version
+      - claude --version
+      - |
+        if aws sts get-caller-identity >/dev/null 2>&1; then
+          aws sts get-caller-identity
+        else
+          echo "AWS credentials are not available yet. Configure ~/.aws on the host."
+        fi
+
+  aws:identity:
+    desc: 現在のAWS認証主体を確認する
+    cmds:
+      - aws sts get-caller-identity
+
+  test:
+    desc: アプリケーションのテストと静的検査を実行する
+    cmds:
+      - go test ./...
+      - go vet ./...
+
+  infra:test:
+    desc: CDKコードのテストと静的検査を実行する
+    dir: infra
+    cmds:
+      - go test ./...
+      - go vet ./...
+
+  infra:synth:
+    desc: 統合CDK Appから3層のCloudFormationテンプレートを生成する
+    deps: [infra:test]
+    dir: infra
+    cmds:
+      - cdk synth --quiet
+
+  infra:diff:
+    desc: 統合CDK Appの差分を表示する
+    dir: infra
+    cmds:
+      - cdk diff --all
+
+  deploy:stack:
+    desc: Network StackとStorage Stackをデプロイする
+    deps: [infra:test]
+    dir: infra
+    cmds:
+      - cdk deploy dev-codepipeline-monorepo-practice-network-stack dev-codepipeline-monorepo-practice-storage-stack --require-approval never
+
+  deploy:application:
+    desc: SSMの関数別イメージタグを参照してApplication Stackをデプロイする
+    deps: [infra:test]
+    cmds:
+      - bash scripts/prepare-application-deploy.sh
+      - cd infra && cdk deploy dev-codepipeline-monorepo-practice-application-stack --exclusively --require-approval never
+
+  deploy:application:init:
+    desc: 初回のGit SHAをSSMへ設定してApplication Stackをデプロイする
+    requires:
+      vars: [IMAGE_TAG]
+    cmds:
+      - bash scripts/prepare-application-deploy.sh --initialize "{{.IMAGE_TAG}}"
+      - task: deploy:application
+
+  codex:
+    desc: Codexを起動する（Dev Container内専用）
+    cmds:
+      - codex --dangerously-bypass-approvals-and-sandbox
+
+  claude:
+    desc: Claude Codeを起動する
+    cmds:
+      - claude

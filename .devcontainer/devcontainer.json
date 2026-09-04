@@ -1,0 +1,23 @@
+{
+    "name": "codepipeline_monorepo_practice DevContainer",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "go",
+    "workspaceFolder": "/home/dev/codepipeline_monorepo_practice",
+    "postCreateCommand": "task setup",
+    "remoteUser": "dev",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "golang.go",
+                "amazonwebservices.aws-toolkit-vscode",
+                "ms-azuretools.vscode-docker",
+                "redhat.vscode-yaml",
+                "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries"
+            ],
+            "settings": {
+                "go.toolsManagement.autoUpdate": true,
+                "files.eol": "\n"
+            }
+        }
+    }
+}

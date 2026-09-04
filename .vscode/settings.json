@@ -1,0 +1,45 @@
+{
+    "gopls": {
+        "build.buildFlags": ["-tags=integration,unit,test"]
+    },
+    "go.lintOnSave": "workspace",
+    "go.lintTool": "golangci-lint-v2",
+    "go.lintFlags": ["--config=${workspaceFolder}/.golangci.yml"],
+    "go.alternateTools": {
+        "golangci-lint-v2": "${workspaceFolder}/custom-gcl"
+    },
+    "cSpell.ignoreWords": [
+        "honnef",
+        "fatih",
+        "gomodifytags",
+        "rinchsan",
+        "gosimports",
+        "staticcheck",
+        "gopls",
+        "localedef",
+        "dpkg",
+        "awscdk",
+        "samber",
+        "awsdynamodb",
+        "jsii",
+        "cdklocal",
+        "dynamodbav",
+        "floci",
+        "attributevalue",
+        "awslambda",
+        "awsec2",
+        "awsapigateway",
+        "awsecr",
+        "usecase",
+        "awsiam",
+        "awscodebuild",
+        "imagedefinitions",
+        "shrimptails",
+        "awscodepipeline",
+        "awscodepipelineactions",
+        "awsecs",
+        "awselasticloadbalancingv2",
+        "awscodedeploy",
+        "taskdef",
+    ]
+}

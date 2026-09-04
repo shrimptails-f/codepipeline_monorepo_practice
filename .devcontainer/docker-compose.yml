@@ -1,0 +1,26 @@
+services:
+  go:
+    build:
+      context: ..
+      dockerfile: .devcontainer/infra/go/Dockerfile
+      args:
+        APP_ROOT: /home/dev/codepipeline_monorepo_practice
+    env_file:
+      - .env
+    environment:
+      AWS_PROFILE: ${AWS_PROFILE:-default}
+      AWS_REGION: ${AWS_REGION:-ap-northeast-1}
+      AWS_DEFAULT_REGION: ${AWS_REGION:-ap-northeast-1}
+    tty: true
+    init: true
+    volumes:
+      - ..:/home/dev/codepipeline_monorepo_practice
+      - ${HOME}/.aws:/home/dev/.aws:ro
+      - claude-config:/home/dev/.claude
+      - codex-config:/home/dev/.codex
+      - go-modules:/home/dev/go/pkg/mod
+
+volumes:
+  claude-config:
+  codex-config:
+  go-modules:

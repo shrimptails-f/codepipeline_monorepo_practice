@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+          "label": "codex callback access",
+          "type": "shell",
+          "command": "curl -v '${input:codex_callback}'",
+          "problemMatcher": [],
+          "presentation": {
+            "echo": true,
+            "reveal": "always"
+          }
+        },
+    ],
+     "inputs": [
+       {
+         "id": "codex_callback",
+         "type": "promptString",
+         "description": "callbackのURLを入力してください",
+         "default": "http://localhost:1455/auth/callback?"
+       },
+    ],
+}

@@ -1,0 +1,4 @@
+{
+  "app": "go run main.go",
+  "requireApproval": "any-change"
+}

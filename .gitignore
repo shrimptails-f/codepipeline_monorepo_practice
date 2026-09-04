@@ -1,0 +1,27 @@
+.env
+
+# ビルドファイル
+infra/infra
+/user
+/main
+/dist/
+*.zip
+coverage.out
+coverage.html
+phasekeeper
+
+# node
+node_modules
+
+#AIエージェント用の課題メモディレクトリ
+tasks
+tmp
+.claude-local
+
+# 恐らくWindowsユーザーに使用中と解釈されWSL2配置時にgit configコマンドが失敗してしまうのでマウントした際の差分を無視する用。
+.gitconfig
+
+# tfstateのような状態管理ファイルではない。CloudFormation 側のスタック状態で管理されるので不要
+cdk.out
+cdk.context.json
+diagram.*
