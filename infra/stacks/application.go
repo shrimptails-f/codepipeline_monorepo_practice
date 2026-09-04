@@ -196,7 +196,12 @@ func grantDeploymentPermissions(project awscodebuild.PipelineProject, cfg config
 		Resources: &functionArns,
 	}))
 	project.AddToRolePolicy(awsiam.NewPolicyStatement(&awsiam.PolicyStatementProps{
-		Actions: _jsii_.Strings("codedeploy:CreateDeployment", "codedeploy:GetDeployment", "codedeploy:GetDeploymentConfig"),
+		Actions: _jsii_.Strings(
+			"codedeploy:CreateDeployment",
+			"codedeploy:GetDeployment",
+			"codedeploy:GetDeploymentConfig",
+			"codedeploy:RegisterApplicationRevision",
+		),
 		Resources: func() *[]*string {
 			resources := append(deploymentGroupArns, _jsii_.String("*"))
 			return &resources
