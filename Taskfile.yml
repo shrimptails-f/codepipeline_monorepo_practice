@@ -92,6 +92,12 @@ tasks:
       - bash scripts/prepare-application-deploy.sh --initialize "{{.IMAGE_TAG}}"
       - task: deploy:application
 
+  destroy:
+    desc: 統合CDK Appの全Stackを削除する
+    dir: infra
+    cmds:
+      - cdk destroy --all --force
+
   codex:
     desc: Codexを起動する（Dev Container内専用）
     cmds:
