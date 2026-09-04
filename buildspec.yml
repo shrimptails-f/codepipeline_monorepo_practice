@@ -1,6 +1,11 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      golang: 1.26
+    commands:
+      - go version
   build:
     commands:
       - bash scripts/pipeline-deploy.sh
