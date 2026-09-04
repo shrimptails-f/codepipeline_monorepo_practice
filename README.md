@@ -23,7 +23,7 @@ task infra:synth
 初回デプロイは次の3段階です。
 
 1. `task deploy:stack`でNetwork Stack、Storage Stack、SSM Parameterを作成する。
-2. 各ECR Repositoryへ同じGit SHAタグのarm64イメージを手動でpushする。
+2. `task image:push IMAGE_TAG=<Git SHA>`で各ECR Repositoryへarm64イメージをpushする。
 3. `task deploy:application:init IMAGE_TAG=<Git SHA>`でSSMを初期化し、Application Stackを作成する。
 
 2回目以降のApplication Stackデプロイは`task deploy:application`を使用し、関数ごとのイメージタグをSSMから参照します。

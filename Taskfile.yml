@@ -70,6 +70,13 @@ tasks:
     cmds:
       - cdk deploy dev-codepipeline-monorepo-practice-network-stack dev-codepipeline-monorepo-practice-storage-stack --require-approval never
 
+  image:push:
+    desc: 3つのLambdaイメージを同じGit SHAタグで各ECRへpushする
+    requires:
+      vars: [IMAGE_TAG]
+    cmds:
+      - bash scripts/push-initial-images.sh "{{.IMAGE_TAG}}"
+
   deploy:application:
     desc: SSMの関数別イメージタグを参照してApplication Stackをデプロイする
     deps: [infra:test]

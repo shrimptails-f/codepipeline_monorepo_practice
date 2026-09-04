@@ -31,7 +31,11 @@
    task deploy:stack
    ```
 
-4. 3つのECR Repositoryへ、各関数のarm64イメージを同じGit SHAタグで手動pushする。
+4. 3つのECR Repositoryへ、各関数のarm64イメージを同じGit SHAタグでpushする。
+
+   ```bash
+   task image:push IMAGE_TAG=<Git SHA>
+   ```
 
 5. Application Stackをデプロイする。
 
